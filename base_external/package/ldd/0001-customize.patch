@@ -1,0 +1,46 @@
+diff --git a/misc-modules/hello.c b/misc-modules/hello.c
+index 85cd6d0..46e01ba 100644
+--- a/misc-modules/hello.c
++++ b/misc-modules/hello.c
+@@ -7,13 +7,13 @@ MODULE_LICENSE("Dual BSD/GPL");
+ 
+ static int hello_init(void)
+ {
+-	printk(KERN_ALERT "Hello, world\n");
++	printk(KERN_ALERT "Hello, solomonbstoner\n");
+ 	return 0;
+ }
+ 
+ static void hello_exit(void)
+ {
+-	printk(KERN_ALERT "Goodbye, cruel world\n");
++	printk(KERN_ALERT "Goodbye, solomonbstoner\n");
+ }
+ 
+ module_init(hello_init);
+diff --git a/misc-modules/module_load b/misc-modules/module_load
+index a669c5e..d178aa1 100755
+--- a/misc-modules/module_load
++++ b/misc-modules/module_load
+@@ -22,7 +22,7 @@ else
+ fi
+ 
+ echo "Load our module, exit on failure"
+-insmod ./$module.ko $* || exit 1
++insmod /lib/modules/$(uname -r)/extra/$module.ko $* || exit 1
+ echo "Get the major number (allocated with allocate_chrdev_region) from /proc/devices"
+ major=$(awk "\$2==\"$module\" {print \$1}" /proc/devices)
+ if [ ! -z ${major} ]; then
+diff --git a/scull/scull_load b/scull/scull_load
+index 2ef6a54..9efa120 100755
+--- a/scull/scull_load
++++ b/scull/scull_load
+@@ -13,7 +13,7 @@ fi
+ 
+ # invoke insmod with all arguments we got
+ # and use a pathname, as insmod doesn't look in . by default
+-insmod ./$module.ko $* || exit 1
++insmod /lib/modules/$(uname -r)/extra/$module.ko $* || exit 1
+ 
+ # retrieve major number
+ major=$(awk "\$2==\"$module\" {print \$1}" /proc/devices)
