@@ -1,0 +1,5 @@
+config BR2_PACKAGE_LDD
+        bool "ldd"
+        help
+          Assignment 7 package that starts and stops a faulty kernel driver and
+	  the scull kernel driver.
