@@ -6,13 +6,16 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = 'origin/ass-4'
+AESD_ASSIGNMENTS_VERSION = '4e58fc1d6a0084b5be6ff886bf9afd68cafda1a2'
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
 AESD_ASSIGNMENTS_SITE = 'git@github.com:cu-ecen-aeld/assignments-3-and-later-solomonbstoner.git'
 AESD_ASSIGNMENTS_SITE_METHOD = git
 AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
+
+AESD_ASSIGNMENTS_MODULE_SUBDIRS = aesd-char-driver
+AESD_ASSIGNMENTS_MAKE_OPTS = KVERSION=$ (LINUX_VERSION_PROBED)
 
 define AESD_ASSIGNMENTS_BUILD_CMDS
 	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/finder-app all
@@ -32,6 +35,11 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 	# Installation for aesdsocket
 	$(INSTALL) -m 0755 $(@D)/server/aesdsocket $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 $(@D)/server/aesdsocket-start-stop $(TARGET_DIR)/etc/init.d/S99aesdsocket
+
+	$(INSTALL) -m 0755 $(@D)/assignment-autotest/test/assignment8/drivertest.sh $(TARGET_DIR)/usr/bin
+	$(INSTALL) -m 0755 $(@D)/aesd-char-driver/aesdchar_load $(TARGET_DIR)/usr/bin
+	$(INSTALL) -m 0755 $(@D)/aesd-char-driver/aesdchar_unload $(TARGET_DIR)/usr/bin
 endef
 
+$(eval $(kernel-module))
 $(eval $(generic-package))

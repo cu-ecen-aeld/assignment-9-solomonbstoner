@@ -1,0 +1,16 @@
+#! /bin/sh
+
+case "$1" in
+start)
+		echo "Starting init script for aesdchar driver module"
+		start-stop-daemon -S -n init -a /usr/bin/aesdchar_load
+;;
+stop)
+		echo "Removing aesdchar driver modules"
+		start-stop-daemon -S -n init -a /usr/bin/aesdchar_unload
+;;
+*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+esac
+exit 0
